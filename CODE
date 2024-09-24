@@ -1,0 +1,15 @@
+DELIMITER //
+CREATE TRIGGER InsertarUsuario 
+AFTER INSERT ON usuarios 
+FOR EACH ROW 
+BEGIN 
+    IF NEW.tipo = 1 THEN
+        INSERT INTO vendedor (cedula, idsucursal, salario)
+        VALUES (NEW.idUsuarios, 1, 1300000);
+    ELSEIF NEW.tipo = 2 THEN
+        INSERT INTO clientes (cedula, puntaje, paginaWeb, direccion)
+        VALUES (NEW.idUsuarios, 0, 'myfood@gmail.com', NEW.direccion);
+    END IF;
+END //
+DELIMITER ;
+
